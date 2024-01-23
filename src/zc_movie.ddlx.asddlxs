@@ -1,0 +1,51 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+  typeNamePlural: 'Movies',
+  typeName: 'Movie',
+  title.value: 'Title',
+  description.value: 'Genre',
+  imageUrl: 'ImageUrl'
+}
+annotate view ZC_MOVIE with
+{
+
+  /* Facets */
+  @UI.facet:
+  [
+    { position: 10, targetQualifier: 'MovieDetails', label: 'Movie Details', type: #FIELDGROUP_REFERENCE },
+    { position: 60, targetElement: '_rating_data', label: 'Rating', type: #LINEITEM_REFERENCE }
+  ]
+
+  /* Fields */
+  @UI.lineItem: [
+  { position: 10 },
+  { position: 10, type: #FOR_ACTION, dataAction: 'rateMovie', label: 'Rate Movie' } ]
+  @UI.selectionField: [{ position: 20 }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'MovieDetails' }]
+  ImageUrl;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.selectionField: [{ position: 30 }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'MovieDetails' }]
+  Title;
+
+  @UI.lineItem: [{ position: 30 }]
+  @UI.selectionField: [{ position: 40 }]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'MovieDetails' }]
+  Genre;
+  
+  @UI.lineItem: [{ position: 40 }]
+  @UI.fieldGroup: [{ position: 40, qualifier: 'MovieDetails' }]
+  PublishingYear;
+
+  @UI.lineItem: [{ position: 50 }]
+  @UI.fieldGroup: [{ position: 50, qualifier: 'MovieDetails' }]
+  RuntimeInMin;
+ 
+  @UI.lineItem: [{ position: 60, label: 'Average Rating' }]
+  @UI.selectionField: [{ position: 60 }]  @UI.fieldGroup: [{ position: 60, qualifier: 'MovieDetails', label: 'Average Rating' }]
+  averageRating;
+
+
+}

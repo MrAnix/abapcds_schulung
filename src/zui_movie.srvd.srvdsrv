@@ -1,0 +1,6 @@
+@EndUserText.label: 'Movie Service Defintion'
+define service ZUI_MOVIE {
+  expose ZC_MOVIE    as Movie;
+  expose ZC_RATING   as Rating;
+  expose ZC_RATING_R as avgRating;
+}

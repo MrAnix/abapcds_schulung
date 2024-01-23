@@ -1,0 +1,61 @@
+managed implementation in class zbp_as_001257_movie unique;
+
+define behavior for ZI_MOVIEDATADEF //alias <alias_name>
+persistent table zabap_movie_a
+lock master
+//authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  association _rating_data { create; }
+
+  field ( readonly, numbering : managed ) MovieUuid;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+  field ( mandatory ) Genre, PublishingYear, Title;
+
+  validation validateGenre on save { field Genre; }
+  action rateMovie parameter ZA_001257_RATING;
+
+  mapping for zabap_movie_a corresponding
+  {
+    MovieUuid = movie_uuid;
+    Title = title;
+    Genre = genre;
+    PublishingYear = publishing_year;
+    RuntimeInMin = runtime_in_min;
+    ImageUrl = image_url;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    LastChangedAt = last_changed_at;
+    LastChangedBy = last_changed_by;
+  }
+}
+
+define behavior for ZI_RATINGDATADEF //alias <alias_name>
+persistent table zabap_rating_a
+lock dependent by _moviedata
+//authorization dependent by _moviedata
+//etag master <field_name>
+{
+  update;
+  delete;
+  association _moviedata;
+
+  field ( readonly, numbering : managed ) RatingUuid;
+  field ( readonly ) MovieUuid;
+  field ( mandatory ) Rating;
+
+  determination DetermineUserName on save { field Rating; }
+
+  mapping for zabap_rating_a corresponding
+  {
+    RatingUuid = rating_uuid;
+    movieuuid  = movie_uuid;
+    UserName   = user_name;
+    Rating     = rating;
+    RatingDate = rating_date;
+
+  }
+}
